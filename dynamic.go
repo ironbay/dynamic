@@ -1,0 +1,59 @@
+package dynamic
+
+import "strings"
+
+func Set(input map[string]interface{}, value interface{}, path ...string) map[string]interface{} {
+	field, path := path[len(path)-1], path[:len(path)-1]
+	current := input
+	for _, segment := range path {
+		next := current[segment]
+		if next == nil {
+			next = map[string]interface{}{}
+			current[segment] = next
+		}
+		current = next.(map[string]interface{})
+	}
+	current[field] = value
+	return current
+}
+
+func Get(input map[string]interface{}, path ...string) interface{} {
+	field, rest := path[len(path)-1], path[:len(path)-1]
+	current := input
+	var ok bool
+	for _, segment := range rest {
+		next := current[segment]
+		if next == nil {
+			return nil
+		}
+		current, ok = next.(map[string]interface{})
+		if !ok {
+			return nil
+		}
+	}
+	return current[field]
+}
+
+func Keys(input map[string]interface{}) []string {
+	result := []string{}
+	for key, _ := range input {
+		result = append(result, key)
+	}
+	return result
+}
+
+func Inflate(input map[string]interface{}) map[string]interface{} {
+	for key, value := range input {
+		splits := strings.Split(key, ".")
+		if casted, ok := value.(map[string]interface{}); ok {
+			value = Inflate(casted)
+		}
+		delete(input, key)
+		Set(input, value, splits...)
+	}
+	return input
+}
+
+func Merge(destination, source map[string]interface{}) {
+
+}
