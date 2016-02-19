@@ -55,5 +55,21 @@ func Inflate(input map[string]interface{}) map[string]interface{} {
 }
 
 func Merge(destination, source map[string]interface{}) {
-
+	for key, value := range source {
+		nest, ok := value.(map[string]interface{})
+		if !ok {
+			destination[key] = value
+			continue
+		}
+		var match map[string]interface{}
+		exists, ok := destination[key]
+		if ok {
+			match, _ = exists.(map[string]interface{})
+		}
+		if match == nil {
+			match = make(map[string]interface{})
+			destination[key] = match
+		}
+		Merge(match, nest)
+	}
 }
