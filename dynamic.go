@@ -3,6 +3,9 @@ package dynamic
 import "strings"
 
 func Set(input map[string]interface{}, value interface{}, path ...string) map[string]interface{} {
+	if len(path) == 0 {
+		return input
+	}
 	field, path := path[len(path)-1], path[:len(path)-1]
 	current := input
 	for _, segment := range path {
@@ -71,5 +74,11 @@ func Merge(destination, source map[string]interface{}) {
 			destination[key] = match
 		}
 		Merge(match, nest)
+	}
+}
+
+func Map(destination map[string]interface{}, arr []string) {
+	for _, val := range arr {
+		destination[val] = true
 	}
 }
