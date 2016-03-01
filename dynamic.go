@@ -82,3 +82,11 @@ func Map(destination map[string]interface{}, arr []string) {
 		destination[val] = true
 	}
 }
+
+func String(input map[string]interface{}, path ...string) string {
+	match := Get(input, path...)
+	if match == nil {
+		return ""
+	}
+	return match.(string)
+}
