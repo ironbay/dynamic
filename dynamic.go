@@ -2,6 +2,10 @@ package dynamic
 
 import "strings"
 
+func Empty() map[string]interface{} {
+	return map[string]interface{}{}
+}
+
 func Set(input map[string]interface{}, value interface{}, path ...string) map[string]interface{} {
 	if len(path) == 0 {
 		return input
