@@ -94,3 +94,10 @@ func String(input map[string]interface{}, path ...string) string {
 	}
 	return match.(string)
 }
+
+func Build(args ...interface{}) map[string]interface{} {
+	result := Empty()
+	for n := 0; n < len(args); n += 2 {
+		result[args[n].(string)] = args[n+1]
+	}
+}
