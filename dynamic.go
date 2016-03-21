@@ -100,4 +100,5 @@ func Build(args ...interface{}) map[string]interface{} {
 	for n := 0; n < len(args); n += 2 {
 		result[args[n].(string)] = args[n+1]
 	}
+	return result
 }
