@@ -110,3 +110,11 @@ func Build(args ...interface{}) map[string]interface{} {
 	}
 	return result
 }
+
+func Array(input map[string]interface{}, path ...string) []interface{} {
+	match := Get(input, path...)
+	if match == nil {
+		return []interface{}{}
+	}
+	return match.([]interface{})
+}
