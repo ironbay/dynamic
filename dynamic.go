@@ -17,6 +17,12 @@ func Set(input map[string]interface{}, value interface{}, path ...string) map[st
 		if next == nil {
 			next = map[string]interface{}{}
 			current[segment] = next
+		} else {
+			_, ok := next.(map[string]interface{})
+			if !ok {
+				next = map[string]interface{}{}
+				current[segment] = next
+			}
 		}
 		current = next.(map[string]interface{})
 	}
