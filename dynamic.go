@@ -95,6 +95,14 @@ func String(input map[string]interface{}, path ...string) string {
 	return match.(string)
 }
 
+func Int(input map[string]interface{}, path ...string) int {
+	match := Get(input, path...)
+	if match == nil {
+		return 0
+	}
+	return match.(int)
+}
+
 func Object(input map[string]interface{}, path ...string) map[string]interface{} {
 	match := Get(input, path...)
 	if match == nil {
