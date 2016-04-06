@@ -109,6 +109,14 @@ func Int(input map[string]interface{}, path ...string) int {
 	return match.(int)
 }
 
+func Float(input map[string]interface{}, path ...string) float64 {
+	match := Get(input, path...)
+	if match == nil {
+		return 0
+	}
+	return match.(float64)
+}
+
 func Object(input map[string]interface{}, path ...string) map[string]interface{} {
 	match := Get(input, path...)
 	if match == nil {
