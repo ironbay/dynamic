@@ -1,6 +1,9 @@
 package dynamic
 
-import "strings"
+import (
+	"encoding/json"
+	"strings"
+)
 
 func Empty() map[string]interface{} {
 	return map[string]interface{}{}
@@ -101,17 +104,29 @@ func String(input map[string]interface{}, path ...string) string {
 	return match.(string)
 }
 
-func Int(input map[string]interface{}, path ...string) int {
+func Int(input map[string]interface{}, path ...string) int64 {
 	match := Get(input, path...)
 	if match == nil {
 		return 0
 	}
-	return match.(int)
+	if number, ok := match.(json.Number); ok {
+		if i, err := number.Int64(); err == nil {
+			return i
+		}
+		return 0
+	}
+	return match.(int64)
 }
 
 func Float(input map[string]interface{}, path ...string) float64 {
 	match := Get(input, path...)
 	if match == nil {
+		return 0
+	}
+	if number, ok := match.(json.Number); ok {
+		if float, err := number.Float64(); err == nil {
+			return float
+		}
 		return 0
 	}
 	return match.(float64)
