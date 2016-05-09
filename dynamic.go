@@ -155,3 +155,11 @@ func Array(input map[string]interface{}, path ...string) []interface{} {
 	}
 	return match.([]interface{})
 }
+
+func Clone(input map[string]interface{}) map[string]interface{} {
+	result := make(map[string]interface{})
+	for key, value := range input {
+		result[key] = value
+	}
+	return result
+}
