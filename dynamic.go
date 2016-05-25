@@ -3,6 +3,8 @@ package dynamic
 import (
 	"encoding/json"
 	"strings"
+
+	"github.com/ironbay/dynamic"
 )
 
 func Empty() map[string]interface{} {
@@ -191,6 +193,17 @@ func Flatten(input map[string]interface{}, path ...string) []*Atom {
 			Path:  next,
 			Value: value,
 		})
+	}
+	return result
+}
+
+func Primitives(input map[string]interface{}) map[string]interface{} {
+	result := dynamic.Build()
+	for key, value := range input {
+		if _, ok := value.(map[string]interface{}); ok {
+			continue
+		}
+		result[key] = value
 	}
 	return result
 }
