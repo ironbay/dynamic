@@ -71,6 +71,9 @@ func Inflate(input map[string]interface{}) map[string]interface{} {
 }
 
 func Merge(destination, source map[string]interface{}) {
+	if source == nil {
+		return
+	}
 	for key, value := range source {
 		nest, ok := value.(map[string]interface{})
 		if !ok {
@@ -165,9 +168,29 @@ func Array(input map[string]interface{}, path ...string) []interface{} {
 }
 
 func Clone(input map[string]interface{}) map[string]interface{} {
-	result := make(map[string]interface{})
+	result := Empty()
+	Merge(result, input)
+	return result
+}
+
+type Atom struct {
+	Path  []string
+	Value interface{}
+}
+
+func Flatten(input map[string]interface{}, path ...string) []*Atom {
+	result := []*Atom{}
 	for key, value := range input {
-		result[key] = value
+		next := append(path, key)
+		match, ok := value.(map[string]interface{})
+		if ok {
+			result = append(result, Flatten(match, next...)...)
+			continue
+		}
+		result = append(result, &Atom{
+			Path:  next,
+			Value: value,
+		})
 	}
 	return result
 }
