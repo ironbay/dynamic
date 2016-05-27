@@ -205,3 +205,12 @@ func Primitives(input map[string]interface{}) map[string]interface{} {
 	}
 	return result
 }
+
+func Delete(input map[string]interface{}, path ...string) {
+	if len(path) == 0 {
+		return
+	}
+	last := path[len(path)-1]
+	match := Object(input, path[:len(path)-1]...)
+	delete(match, last)
+}
