@@ -93,7 +93,7 @@ func Merge(destination, source map[string]interface{}) {
 	}
 }
 
-func Map(destination map[string]interface{}, arr []string) map[string]interface{} {
+func Map(destination map[string]interface{}, arr ...string) map[string]interface{} {
 	for _, val := range arr {
 		destination[val] = true
 	}
