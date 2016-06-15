@@ -70,9 +70,9 @@ func Inflate(input map[string]interface{}) map[string]interface{} {
 	return input
 }
 
-func Merge(destination, source map[string]interface{}) {
+func Merge(destination, source map[string]interface{}) map[string]interface{} {
 	if source == nil {
-		return
+		return source
 	}
 	for key, value := range source {
 		nest, ok := value.(map[string]interface{})
@@ -91,6 +91,7 @@ func Merge(destination, source map[string]interface{}) {
 		}
 		Merge(match, nest)
 	}
+	return destination
 }
 
 func Map(destination map[string]interface{}, arr ...string) map[string]interface{} {
