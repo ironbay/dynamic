@@ -3,6 +3,7 @@ package dynamic
 import (
 	"encoding/json"
 	"strings"
+	"time"
 )
 
 func Empty() map[string]interface{} {
@@ -151,6 +152,14 @@ func Object(input map[string]interface{}, path ...string) map[string]interface{}
 		return map[string]interface{}{}
 	}
 	return match.(map[string]interface{})
+}
+
+func Time(input map[string]interface{}, path ...string) time.Time {
+	match := Get(input, path...)
+	if match == nil {
+		return time.Time{}
+	}
+	return match.(time.Time)
 }
 
 func Build(args ...interface{}) map[string]interface{} {
