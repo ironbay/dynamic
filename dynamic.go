@@ -155,11 +155,15 @@ func Object(input map[string]interface{}, path ...string) map[string]interface{}
 }
 
 func Time(input map[string]interface{}, path ...string) time.Time {
-	match := Get(input, path...)
-	if match == nil {
+	match := String(input, path...)
+	if match == "" {
 		return time.Time{}
 	}
-	return match.(time.Time)
+	parsed, err := time.Parse(time.RFC3339, match)
+	if err != nil {
+		return time.Time{}
+	}
+	return parsed
 }
 
 func Build(args ...interface{}) map[string]interface{} {
