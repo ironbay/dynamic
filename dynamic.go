@@ -31,7 +31,7 @@ func Set(input map[string]interface{}, value interface{}, path ...string) map[st
 		current = next.(map[string]interface{})
 	}
 	current[field] = value
-	return current
+	return input
 }
 
 func Get(input map[string]interface{}, path ...string) interface{} {
