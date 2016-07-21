@@ -59,6 +59,14 @@ func Keys(input map[string]interface{}) []string {
 	return result
 }
 
+func Values(input map[string]interface{}) []interface{} {
+	result := make([]interface{}, 0)
+	for _, v := range input {
+		result = append(result, v)
+	}
+	return result
+}
+
 func Inflate(input map[string]interface{}) map[string]interface{} {
 	for key, value := range input {
 		splits := strings.Split(key, ".")
