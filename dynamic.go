@@ -237,3 +237,13 @@ func Delete(input map[string]interface{}, path ...string) {
 	match := Object(input, path[:len(path)-1]...)
 	delete(match, last)
 }
+
+func Pick(src map[string]interface{}, keys ...string) map[string]interface{} {
+	result := Empty()
+	for _, k := range keys {
+		if src[k] != nil {
+			result[k] = src[k]
+		}
+	}
+	return result
+}
