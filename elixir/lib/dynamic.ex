@@ -86,7 +86,7 @@ defmodule Dynamic do
   @doc ~S"""
   Set the value at the given path
 
-  ## Examples
+  ## Example
       iex> Dynamic.put(%{}, [:a, :b, :c], :foo)
       %{a: %{b: %{c: :foo}}}
   """
@@ -154,6 +154,13 @@ defmodule Dynamic do
     end
   end
 
+  @doc """
+  Returns input stripped of child maps
+
+  ## Examples
+  iex> Dynamic.primitives(%{a: 1, child: %{b: 1}})
+  %{a: 1}
+  """
   def primitives(input) do
     input
     |> Stream.filter(fn {_key, value} -> !is_map(value) end)
