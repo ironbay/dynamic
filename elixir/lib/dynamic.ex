@@ -1,16 +1,23 @@
 defmodule Dynamic do
-  @doc ~S"""
+  @moduledoc """
+    Provides useful tooling when manipulating complex maps
+  """
+
+  @doc """
   Gets value at path or falls back
+
   ## Examples
       iex> Dynamic.get(%{a: %{b: 1}}, [:a, :b])
       1
   """
+  @spec get(map, Enumerable.t()) :: any
   def get(input, path) do
     get(input, path, nil, nil)
   end
 
   @doc ~S"""
   Gets value at path or falls back
+
   ## Examples
       iex> Dynamic.get(%{a: %{b: 1}}, [:a, :b, :c], :foo)
       :foo
@@ -58,18 +65,27 @@ defmodule Dynamic do
 
   @doc ~S"""
   Default to fallback if input is nil
+
   ## Examples
       iex> Dynamic.default(nil, :foo)
       :foo
   """
   def default(input, fallback), do: default(input, fallback, nil)
 
+  @doc """
+  Defaults to fallback if input is compare
+
+  ## Examples
+      iex> Dynamic.default(:bar, :foo, :bar)
+      :foo
+  """
   def default(input, fallback, compare) when input == compare, do: fallback
 
   def default(input, _compare, _default), do: input
 
   @doc ~S"""
   Set the value at the given path
+
   ## Examples
       iex> Dynamic.put(%{}, [:a, :b, :c], :foo)
       %{a: %{b: %{c: :foo}}}
@@ -89,6 +105,7 @@ defmodule Dynamic do
 
   @doc ~S"""
   Delete the value at the given path
+
   ## Examples
       iex> Dynamic.put(%{}, [:a, :b, :c], :foo)
       %{a: %{b: %{c: :foo}}}
@@ -105,6 +122,13 @@ defmodule Dynamic do
     end
   end
 
+  @doc ~S"""
+  Deep merge the right argument into the left
+
+  ## Examples
+      iex> Dynamic.combine(%{a: 1}, %{b: 1})
+      %{a: 1, b: 1}
+  """
   def combine(left, right), do: Map.merge(left, right, &combine/3)
   defp combine(_key, left = %{}, right = %{}), do: combine(left, right)
   defp combine(_key, _left, right), do: right
