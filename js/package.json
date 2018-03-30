@@ -1,0 +1,17 @@
+{
+  "name": "@ironbay/dynamic",
+  "version": "1.0.4",
+  "description": "",
+  "main": "lib/dynamic.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "push": "npm run build && npm version patch && npm publish --access=public"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^2.8.1"
+  }
+}
