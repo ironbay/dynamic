@@ -1,5 +1,3 @@
-import Layer from './layer'
-
 export default class Dynamic {
     static put(input: Object, path: Array<any>, value) {
         const [head, ...tail] = path
@@ -45,7 +43,7 @@ export default class Dynamic {
         return Object.keys(Dynamic.get<{ [key: string]: any }>(input, path) || {})
     }
 
-    static get_pattern(input: any, path: Array<string>, left = []): Array<Layer<any>> {
+    static get_pattern(input: any, path: Array<string>, left = []): Array<Dynamic.Layer<any>> {
         if (input == null)
             return []
         const [head, ...tail] = path
@@ -60,10 +58,10 @@ export default class Dynamic {
             .reduce((collect, [key, child]) => [...collect, ...Dynamic.get_pattern(child, tail, [...left, key])], [])
     }
 
-    static flatten(input: Object, path = new Array<string>()): Array<Layer<any>> {
+    static flatten(input: Object, path = new Array<string>()): Array<Dynamic.Layer<any>> {
         return Object
             .keys(input)
-            .reduce((collect, key): Array<Layer<any>> => {
+            .reduce((collect, key): Array<Dynamic.Layer<any>> => {
                 const value = input[key]
                 const next = [...path, key]
                 if (value instanceof Object) {
@@ -75,10 +73,10 @@ export default class Dynamic {
                     path: next,
                     value: value,
                 }, ...collect]
-            }, new Array<Layer<any>>())
+            }, new Array<Dynamic.Layer<any>>())
     }
 
-    static layers(input: Object, path = new Array<string>()): Array<Layer<any>> {
+    static layers(input: Object, path = new Array<string>()): Array<Dynamic.Layer<any>> {
         switch (input instanceof Object) {
             case false:
                 return []

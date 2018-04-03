@@ -1,2 +1,3 @@
-export { default as default } from './dynamic'
-export { default as Layer } from './layer'
+import './types'
+import Dynamic from './dynamic'
+export default Dynamic
