@@ -143,6 +143,7 @@ defmodule Dynamic do
 
   @doc ~S"""
   Traverses map recursively and returns every child map and its path
+
   ## Examples
       iex> Dynamic.layers(%{a: 1, child: %{b: 1}})
       [
@@ -173,8 +174,7 @@ defmodule Dynamic do
   Returns input stripped of child maps
 
   ## Examples
-      iex> Dynamic.primitives(%{a: 1, child: %{b: 1}})
-      %{a: 1}
+      iex> Dynamic.primitives(%{a: 1, child: %{%{a: 1}
   """
   def primitives(input) do
     input
