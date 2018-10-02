@@ -21,7 +21,8 @@ export default class Dynamic {
         const child = input[head]
         if (child == null || typeof child !== 'object')
             return input
-        return Dynamic.delete(child, tail)
+        Dynamic.delete(child, tail)
+        return input;
     }
 
 
