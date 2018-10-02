@@ -24,7 +24,8 @@ var Dynamic = /** @class */ (function () {
         var child = input[head];
         if (child == null || typeof child !== 'object')
             return input;
-        return Dynamic.delete(child, tail);
+        input[head] = Dynamic.delete(child, tail);
+        return input;
     };
     Dynamic.get = function (input, path) {
         var head = path[0], tail = path.slice(1);
@@ -66,7 +67,7 @@ var Dynamic = /** @class */ (function () {
             .reduce(function (collect, key) {
             var value = input[key];
             var next = path.concat([key]);
-            if (value instanceof Object) {
+            if (value instanceof Object && Array.isArray(value) === false) {
                 if (Object.keys(value).length > 0)
                     return Dynamic.flatten(value, next).concat(collect);
                 return collect;
