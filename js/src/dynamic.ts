@@ -21,7 +21,8 @@ export default class Dynamic {
         const child = input[head]
         if (child == null || typeof child !== 'object')
             return input
-        return Dynamic.delete(child, tail)
+        input[head] = Dynamic.delete(child, tail)
+        return input;
     }
 
 
@@ -64,7 +65,7 @@ export default class Dynamic {
             .reduce((collect, key): Array<Dynamic.Layer<any>> => {
                 const value = input[key]
                 const next = [...path, key]
-                if (value instanceof Object) {
+                if (value instanceof Object && Array.isArray(value) === false) {
                     if (Object.keys(value).length > 0)
                         return [...Dynamic.flatten(value, next), ...collect]
                     return collect
