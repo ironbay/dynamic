@@ -196,11 +196,31 @@ defmodule Dynamic do
       end,
       schema
       |> flatten()
+      |> Stream.flat_map(fn {path, value} ->
+        count = Enum.count(path)
+
+        {result, _} =
+          path
+          |> Stream.with_index()
+          |> Enum.reduce({[], []}, fn {item, index}, {all, last} ->
+            next = last ++ [item]
+            {[{next, if(index + 1 == count, do: value, else: nil)} | all], next}
+          end)
+
+        result |> IO.inspect()
+      end)
+      |> Stream.map(&IO.inspect/1)
       |> Enum.map(fn {path, value} ->
         fun =
           path
           |> Enum.join("_")
           |> String.to_atom()
+
+        value =
+          case value do
+            %{} -> nil
+            value -> value
+          end
 
         quote do
           def unquote(fun)(input) do
