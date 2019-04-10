@@ -207,9 +207,8 @@ defmodule Dynamic do
             {[{next, if(index + 1 == count, do: value, else: nil)} | all], next}
           end)
 
-        result |> IO.inspect()
+        result
       end)
-      |> Stream.map(&IO.inspect/1)
       |> Enum.map(fn {path, value} ->
         fun =
           path
