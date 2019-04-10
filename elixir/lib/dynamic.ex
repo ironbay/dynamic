@@ -184,4 +184,41 @@ defmodule Dynamic do
 
   def atom_keys(input), do: for({key, val} <- input, into: %{}, do: {String.to_atom(key), val})
   def string_keys(input), do: for({key, val} <- input, into: %{}, do: {Atom.to_string(key), val})
+
+  defmacro schema(fields) do
+    {schema, _} = Code.eval_quoted(fields)
+
+    [
+      quote do
+        def schema() do
+          unquote(fields)
+        end
+      end,
+      schema
+      |> flatten()
+      |> Enum.map(fn {path, value} ->
+        fun =
+          path
+          |> Enum.join("_")
+          |> String.to_atom()
+
+        quote do
+          def unquote(fun)(input) do
+            Dynamic.get(input, unquote(path), unquote(value))
+          end
+        end
+      end)
+    ]
+  end
+end
+
+defmodule Example do
+  import Dynamic
+
+  schema(%{
+    "a" => %{
+      "b" => nil
+    },
+    "c" => 0
+  })
 end
