@@ -209,6 +209,7 @@ defmodule Dynamic do
 
         result
       end)
+      |> Stream.uniq(fn {path, _} -> path end)
       |> Enum.map(fn {path, value} ->
         fun =
           path
@@ -229,15 +230,4 @@ defmodule Dynamic do
       end)
     ]
   end
-end
-
-defmodule Example do
-  import Dynamic
-
-  schema(%{
-    "a" => %{
-      "b" => nil
-    },
-    "c" => 0
-  })
 end
