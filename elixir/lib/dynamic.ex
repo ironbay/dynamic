@@ -209,7 +209,7 @@ defmodule Dynamic do
 
         result
       end)
-      |> Stream.uniq(fn {path, _} -> path end)
+      |> Stream.uniq_by(fn {path, _} -> path end)
       |> Enum.map(fn {path, value} ->
         fun =
           path
