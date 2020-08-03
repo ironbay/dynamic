@@ -1,21 +1,14 @@
 {
-    "compilerOptions": {
-        "outDir": "./lib",
-        "sourceMap": true,
-        "noImplicitAny": false,
-        "module": "commonjs",
-        "target": "es5",
-        "declaration": true,
-        "lib": [
-            "dom",
-            "es5",
-            "scripthost",
-            "es2015.promise",
-            "es2015.collection",
-            "es2017.object"
-        ]
-    },
-    "include": [
-        "src"
-    ]
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "./dist",
+    "module": "es6",
+    "moduleResolution": "Node",
+    "lib": ["es2017"],
+    "noImplicitAny": false,
+    "outDir": "./dist",
+    "target": "es2015",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["./src/**/*"]
 }
